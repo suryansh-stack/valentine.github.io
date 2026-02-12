@@ -1,0 +1,166 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Valentine</title>
+<style>
+body{
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+font-family:Arial;
+background:#ffe6ea;
+text-align:center;
+overflow: hidden; /* <- Prevent scroll bars */
+}
+.container{
+position:relative;
+}
+h1{
+margin-bottom:40px;
+}
+button{
+padding:15px 25px;
+font-size:18px;
+border:none;
+border-radius:10px;
+cursor:pointer;
+}
+#yes{
+background:#ff4d6d;
+color:white;
+transition: font-size 0.2s ease;
+}
+#no{
+background:#444;
+color:white;
+position:fixed;
+left:200px;
+transition: left 0.2s ease, top 0.2s ease;
+}
+.container{
+position:relative;
+width:400px;
+height:300px;
+}
+.heart {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  pointer-events: none;
+  background: red;
+  transform: rotate(45deg);
+  animation: floatUp 2s ease-out forwards;
+  z-index: 9999;
+}
+
+.heart::before,
+.heart::after {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: red;
+  border-radius: 50%;
+}
+
+.heart::before {
+  top: -10px;
+  left: 0;
+}
+
+.heart::after {
+  top: 0;
+  left: -10px;
+}
+
+@keyframes floatUp {
+  0% {
+    opacity: 1;
+    transform: translateY(0) rotate(45deg) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-150px) rotate(45deg) scale(0.5);
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>Will you be my valentine? ❤️</h1>
+<button id="yes" onclick="yesClick()">YES ❤️</button>
+<button id="no">NO 😢</button>
+</div>
+<script>
+function yesClick(){
+    alert("Yayyy ❤️ Date Fix 😄");
+    createHearts(10);
+}
+function createHearts(count) {
+    for (let i = 0; i < count; i++) {
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+
+        // Random starting position on screen
+        heart.style.left = Math.random() * (window.innerWidth - 20) + "px";
+        heart.style.top = Math.random() * (window.innerHeight - 20) + "px";
+
+        // Random size
+        const size = 10 + Math.random() * 20;
+        heart.style.width = size + "px";
+        heart.style.height = size + "px";
+
+        // Add to body
+        document.body.appendChild(heart);
+
+        // Remove heart after animation
+        heart.addEventListener("animationend", () => heart.remove());
+    }
+}
+let noBtn = document.getElementById("no");
+let yesBtn = document.getElementById("yes");
+let container = document.querySelector(".container");
+
+noBtn.addEventListener("mouseover", function() {
+    let btnWidth = noBtn.offsetWidth;
+    let btnHeight = noBtn.offsetHeight;
+
+    // YES button position & size
+    let yesRect = yesBtn.getBoundingClientRect();
+
+    // Make sure NO stays fully inside the viewport
+    let maxX = window.innerWidth - btnWidth;
+    let maxY = window.innerHeight - btnHeight;
+
+    let x, y;
+    let overlapping = true;
+    let attempts = 0; // safety limit
+
+    while (overlapping && attempts < 100) {
+        x = Math.random() * maxX;
+        y = Math.random() * maxY;
+        attempts++;
+
+        overlapping = !(
+            x + btnWidth < yesRect.left ||  // completely left of YES
+            x > yesRect.right ||            // completely right of YES
+            y + btnHeight < yesRect.top ||  // completely above YES
+            y > yesRect.bottom              // completely below YES
+        );
+    }
+
+    // Increase YES size
+    let currentSize = parseInt(window.getComputedStyle(yesBtn).fontSize);
+    yesBtn.style.fontSize = (currentSize + 2) + "px";
+
+    // Move NO button
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+});
+
+</script>
+
+
+</body>
+</html>
