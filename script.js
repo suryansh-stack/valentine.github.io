@@ -3,7 +3,7 @@ const noBtn = document.getElementById("no");
 
 // YES button click
 yesBtn.addEventListener("click", () => {
-    alert("Yayyy ❤️ Date Fix 😄");
+    
     createHearts(10);
 });
 
@@ -47,6 +47,23 @@ noBtn.addEventListener("mouseover", moveNoBtn);
 noBtn.addEventListener("touchstart", (e) => {
     e.preventDefault(); // prevents button sticking
     moveNoBtn();
+});
+function showToast(message) {
+    const toast = document.createElement("div");
+    toast.className = "toast";
+    toast.textContent = message;
+    document.body.appendChild(toast);
+
+    // Trigger animation
+    setTimeout(() => toast.classList.add("show"), 10);
+
+    // Remove after 2 seconds
+    setTimeout(() => toast.remove(), 2000);
+}
+
+yesBtn.addEventListener("click", () => {
+    createHearts(10);
+    showToast("Yayyy ❤️ Date Fixed 😄");
 });
 
 

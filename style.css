@@ -11,8 +11,10 @@ body {
 
 .container {
     position: relative;
-    width: 400px;
-    height: 300px;
+    width: 90%;
+    max-width: 400px;
+    height: auto;
+    padding: 20px 0;
 }
 
 h1 {
@@ -72,6 +74,23 @@ button {
     top: 0;
     left: -10px;
 }
+.toast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #ff4d6d;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 10000;
+}
+.toast.show {
+    opacity: 1;
+}
+
 
 @keyframes floatUp {
     0% {
