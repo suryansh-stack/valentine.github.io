@@ -8,7 +8,8 @@ yesBtn.addEventListener("click", () => {
 });
 
 // NO button hover
-noBtn.addEventListener("mouseover", () => {
+// Function to move the NO button
+function moveNoBtn() {
     const btnWidth = noBtn.offsetWidth;
     const btnHeight = noBtn.offsetHeight;
     const yesRect = yesBtn.getBoundingClientRect();
@@ -39,7 +40,15 @@ noBtn.addEventListener("mouseover", () => {
 
     noBtn.style.left = x + "px";
     noBtn.style.top = y + "px";
+}
+
+// Add event listeners for desktop hover and mobile touch
+noBtn.addEventListener("mouseover", moveNoBtn);
+noBtn.addEventListener("touchstart", (e) => {
+    e.preventDefault(); // prevents button sticking
+    moveNoBtn();
 });
+
 
 // Heart creation
 function createHearts(count) {
